@@ -5,10 +5,10 @@ const ToDoList = () => {
     const { todos, dispatch } = React.useContext(TodoContext)
     return (
         <div className='todolist'>
-            {toDos.map(i => (
+            {todos.map(i => (
                 <ToDo key={i.id} item={i} />
             ))}
-            <button onClick={props.clearCompleted}>Remove Completed</button>
+            <button onClick={(e) => dispatch({ type: 'removeTrue' })} >Remove Completed</button>
         </div>
     )
 }

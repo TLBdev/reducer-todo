@@ -1,34 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { TodoContext } from '../../contexts/TodoContext'
 
-class ToDoForm extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            task: ''
-        }
+function ToDoForm() {
+    const [input, setInput] = useState('')
+    const { todos, dispatch } = React.useContext(TodoContext)
+    const handleChange = (e) => {
+        setInput(e.target.value)
+        console.log(input)
     }
-    handleChanges = e => {
-        this.setState({
-            task: e.target.value
-        })
-
-    }
-    handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        this.props.addToDo(this.state.task)
-        this.setState({
-            task: ''
-        })
-
+        dispatch({ type: 'addTodo', payload: input })
+        setInput('')
     }
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit} >
-                <input value={this.state.task} onChange={this.handleChanges} type='text' name='task' />
-                <button type='submit'>Add Task</button>
-            </form>
-        )
-    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <input value={input} onChange={handleChange} type='text'></input>
+            <button type='submit'>Add Task</button>
+        </form>
+    )
 }
 
 export default ToDoForm
